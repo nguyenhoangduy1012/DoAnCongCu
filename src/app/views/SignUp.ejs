@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Đăng nhập</title>
+    <title>Login 10</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -20,72 +20,58 @@
                 <div class="col-md-6 col-lg-4">
                     <div class="login-wrap p-0">
                         <h3 class="mb-4 text-center">Have an account?</h3>
-                        <form id="login_form" class="signin-form">
+                        <form id="logup_form" class="signin-form">
                             <div class="form-group">
-                                <input type="text" id="email" class="form-control" placeholder="email" required
-                                    value="qhao74154@gmail.com">
+                                <input type="text" id="email" class="form-control" placeholder="Enter your email"
+                                    required>
                             </div>
                             <div class="form-group">
-                                <input value="qhao74154@gmail.com" id="password" type="password" class="form-control"
-                                    placeholder="Password" required>
+                                <input type="text" id="userName" class="form-control" placeholder="Username" required>
+                            </div>
+                            <div class="form-group">
+                                <input id="password" type="password" class="form-control" placeholder="Password"
+                                    required>
                                 <span toggle="#password-field"
                                     class="fa fa-fw fa-eye field-icon toggle-password"></span>
                             </div>
-                            <div class="form-group d-md-flex">
-                                <div class="w-50">
-                                    <a href="/signup">Or Sign Up</a>
-                                </div>
-                            </div>
+                            <a href="/signin">Or Sign In</a>
                             <div class="form-group">
-                                <button type="submit" class="form-control btn btn-primary submit px-3">Sign In</button>
+                                <button type="submit" class="form-control btn btn-primary submit px-3">Sign Up</button>
                             </div>
-
                         </form>
-                        <p class="w-100 text-center">&mdash; Or Sign In With &mdash;</p>
-                        <div class="social d-flex text-center">
-                            <a href="#" class="px-2 py-2 mr-md-1 rounded"><span class="ion-logo-facebook mr-2"></span>
-                                Facebook</a>
-                            <a href="#" class="px-2 py-2 ml-md-1 rounded"><span class="ion-logo-twitter mr-2"></span>
-                                Twitter</a>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
     <script>
-        const productForm = document.getElementById('login_form');
+        const productForm = document.getElementById('logup_form');
         productForm.addEventListener('submit', (event) => {
             event.preventDefault();
 
+            const userName = document.getElementById('userName').value;
             const password = document.getElementById('password').value;
             const email = document.getElementById('email').value;
 
             const _user = {
+                userName,
                 password,
                 email,
             };
-            const tokenjwt = localStorage.getItem("tokenjwt");
-            let token = tokenjwt ? "Bearer " + tokenjwt : "";
-            console.log("token== " + token)
-            fetch('/adminsignIn', {
+
+            fetch('/adminsignUp', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': token
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(_user)
             })
-                .then(response =>
-                    response.json()
-                ).then(response => {
-                    if (response.message) {
-                        localStorage.setItem("tokenjwt", response.message)
-                        window.location.href = '/';
-                    }
-                }
-                )
-
+                .then(response => {
+                    return response.text()
+                }).then(response => {
+                    console.log(response)
+                    window.location.href = '/'; // replace with your desired URL
+                })
         });
     </script>
 
@@ -93,7 +79,7 @@
     <script src="public/js/popper.js"></script>
     <script src="public/js/bootstrap.min.js"></script>
     <script src="public/js/main.js"></script>
-
+    <!-- // -->
 
 </body>
 
